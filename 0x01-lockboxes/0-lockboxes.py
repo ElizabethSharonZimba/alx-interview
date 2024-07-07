@@ -1,25 +1,28 @@
 #!/usr/bin/python3
 def canUnlockAll(boxes):
-    """
-    Function that checks if all boxes can be unlocked.
-    Args:
-        boxes: List of lists where each sublist contains keys to other boxes.
-    Returns:
-        True if all boxes can be unlocked, False otherwise.
-    """
-    keys = [0]
-    total_boxes = len(boxes)
+    n = len(boxes)
+    opened = [False] * n
+    opened[0] = True
+    queue = [0]
     
-    for key in boxes[0]:
-        if key < total_boxes and key not in keys and key > 0:
-            keys.append(key)
+    while queue:
+        current_box = queue.pop(0)
+        for key in boxes[current_box]:
+            if key < n and not opened[key]:
+                opened[key] = True
+                queue.append(key)
     
-    index = 0
-    while index < len(keys):
-        setkey = keys[index]
-        for key in boxes[setkey]:
-            if key < total_boxes and key not in keys and key > 0:
-                keys.append(key)
-        index += 1
-    
-    return len(keys) == total_boxes
+    return all(opened)
+
+if __name__ == "__main__":
+    canUnlockAll = __import__('0-lockboxes').canUnlockAll
+
+    boxes = [[1], [2], [3], [4], []]
+    print(canUnlockAll(boxes))
+
+    boxes = [[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
+    print(canUnlockAll(boxes))
+
+    boxes = [[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
+    print(canUnlockAll(boxes))
+
