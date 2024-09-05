@@ -1,8 +1,10 @@
 #!/usr/bin/python3
+
 """0. Prime Game - Maria and Ben are playing a game"""
+
 def isWinner(x, nums):
     """x - rounds
-    nums - num list
+    nums - number list
     """
     if x <= 0 or nums is None:
         return None
